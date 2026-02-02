@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Penal Code Tab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#05070d;
+  --glass:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.18);
+  --neon:#00f7ff;
+  --pink:#ff00ff;
+  --text:#e8faff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
+
+body{
+  background:radial-gradient(circle at top,#101b35,#05070d);
+  color:var(--text);
+  padding:15px;
+}
+
+header{
+  text-align:center;
+  padding:20px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  backdrop-filter:blur(14px);
+}
+
+header h1{
+  font-size:24px;
+  color:var(--neon);
+  text-shadow:0 0 15px var(--neon);
+}
+
+/* Search */
+.search-box{
+  margin:20px auto;
+  max-width:650px;
+}
+.search-box input{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid var(--neon);
+  outline:none;
+  font-size:16px;
+  background:rgba(0,0,0,0.55);
+  color:white;
+}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  margin-top:20px;
+  gap:10px;
+  justify-content:center;
+}
+
+.tab-btn{
+  padding:10px 16px;
+  border:none;
+  cursor:pointer;
+  border-radius:12px;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--border);
+  color:white;
+  transition:0.3s;
+}
+
+.tab-btn:hover{
+  box-shadow:0 0 12px var(--neon);
+}
+
+.tab-btn.active{
+  background:var(--neon);
+  color:black;
+  font-weight:bold;
+}
+
+/* Content */
+.tab-content{
+  display:none;
+  margin-top:20px;
+  padding:18px;
+  border-radius:18px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  backdrop-filter:blur(14px);
+}
+
+.tab-content.active{
+  display:block;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid rgba(255,255,255,0.15);
+}
+
+th{color:#9ffcff;}
+
+/* ✅ COPY BUTTON STYLE */
+.copy-btn{
+  background: var(--neon);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.copy-btn:hover{
+  background: white;
+  color: black;
+}
+
+/* ✅ COPY BUTTON FOR COMMANDS */
+.cmd-copy-btn{
+  background: lime;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cmd-copy-btn:hover{
+  background: white;
+  color: black;
+}
+
+/* ✅ Credits Footer */
+.credits{
+  text-align:center;
+  margin-top:30px;
+  padding:15px;
+  font-size:14px;
+  color:#9ffcff;
+  opacity:0.9;
+}
+
+.credits b{
+  color:white;
+  text-shadow:0 0 12px cyan;
+}
+
+@media(max-width:768px){
+  header h1{font-size:18px;}
+  table{font-size:13px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🚔 Penal Codes Tab</h1>
+</header>
+
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="🔍 Search Penal Code...">
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="openTab(event,'a2')">Article 2</button>
+  <button class="tab-btn" onclick="openTab(event,'a3')">Article 3</button>
+  <button class="tab-btn" onclick="openTab(event,'a4')">Article 4</button>
+  <button class="tab-btn" onclick="openTab(event,'a5')">Article 5</button>
+  <button class="tab-btn" onclick="openTab(event,'a6')">Article 6</button>
+  <button class="tab-btn" onclick="openTab(event,'a8')">Article 8</button>
+  <button class="tab-btn" onclick="openTab(event,'a9')">Article 9</button>
+  <button class="tab-btn" onclick="openTab(event,'a10')">Article 10</button>
+  <button class="tab-btn" onclick="openTab(event,'tc')">Traffic Codes</button>
+   <button class="tab-btn" onclick="openTab(event,'cmd')">📟 Commands</button>
+</div>
+
+<!-- ================= ARTICLE 2 ================= -->
+<div id="a2" class="tab-content active">
+<h2>⚖️ ARTICLE 2 — Crimes Against Society</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 2.1.1</td><td>Possession of Narcotics (Less than 4 Units)</td><td>$15,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.1.1</td><td>Repeat Offense (Less than 4 Units)</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+<tr><td>P.C. 2.1.2</td><td>Possession of Narcotics (5–9 Units)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.1.3</td><td>Narcotics with Intent to Distribute</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.1.6</td><td>Possession of Prohibited Items (Less than 3)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.1.7</td><td>Prohibited Items with Intent to Distribute (More than 3)</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.2.1</td><td>Culpable Homicide / Manslaughter</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.2.2</td><td>Murder / Attempted Murder</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.2.3</td><td>Murder Premeditated</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.3.1</td><td>Assault by Threat</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.4.1</td><td>Abandonment</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.4.2</td><td>Failure to Act / Abandonment by Civil Servant</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.5.1</td><td>Kidnapping / Attempted Kidnapping</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.5.2</td><td>Kidnapping - Civil Servant</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.5.3</td><td>Kidnapping - LEO</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.6.1</td><td>Taking a Hostage</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.7.1</td><td>Sexual Harassment</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.7.2</td><td>Sexual Assault</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.7.3</td><td>Rape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.8.1</td><td>Forgery of Documents</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.8.2</td><td>Dealing in Forged Documents</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.9.1</td><td>Petty Theft / Larceny</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.9.1</td><td>Repeat Offense Petty Theft</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.9.4</td><td>Grand Theft Auto</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.10</td><td>Armed Robbery</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.11</td><td>Heist</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.12</td><td>Extortion</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.13</td><td>Fraud</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.14</td><td>Creation of Criminal Community</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.15.1</td><td>Participation in Banditry</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.15.2</td><td>Banditry as Leader</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.16.1</td><td>Assault (Minor)</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.16.2</td><td>Assault with Intent to Harm</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.16.3</td><td>Assault GBH</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.17.1</td><td>Unlicensed Firearms Carry</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.2</td><td>Excessive Firearms Carry (Overcarrying)</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.3</td><td>Possession of Illegal Firearms</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.17.4</td><td>Dealing Illegal Firearms</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.5</td><td>Possession of State Issued Items</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.6</td><td>Illegal Body Armour</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.17.7</td><td>Brandishing Firearm</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.17.8</td><td>Discharging Firearm</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.8</td><td>Repeat Discharging Firearm</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.17.9</td><td>Public Carrying Firearm</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.9</td><td>Repeat Public Carrying</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 3 ================= -->
+<div id="a3" class="tab-content">
+<h2>🚨 ARTICLE 3 — Crimes Against the State</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 3.1.1</td><td>Terrorism as a Participant</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.1.2</td><td>Leading of Terrorism</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.2.1</td><td>Participating in a Riot</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.2.2</td><td>Leading of a Riot</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.3.1</td><td>Sedition as a Participant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.3.2</td><td>Leading of Sedition</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.4.1</td><td>Treason as a Participant</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 3.4.2</td><td>Leading of Treason (High Treason)</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.5.1</td><td>Obstruction of an Investigation</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.5.2</td><td>Obstruction of an Officer or Civil Servant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.5.3</td><td>Obstruction of an Arrest or Detention</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.6.1</td><td>Murder / Attempted Murder of LEO in Line of Duty</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.6.2</td><td>Murder / Attempted Murder of Civil Servant or LEO</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.7</td><td>False Reporting</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.8.1</td><td>Trespassing</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.8.2</td><td>Trespassing on Secure Facility</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.9.1</td><td>Collusion with Criminal Elements</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.11.1</td><td>Failure to Submit Documents</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 3.11.2</td><td>Failure to Identify</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 3.12.1</td><td>Disclosure of Information</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.12.2</td><td>Disclosure of Classified Information</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.13.1</td><td>Posing as a Civil Servant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.13.2</td><td>Posing as a Law Enforcement Officer</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.14.1</td><td>Corruption by a State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+
+<!-- ================= ARTICLE 4 ================= -->
+<div id="a4" class="tab-content">
+<h2>📌 ARTICLE 4 — Malfeasance</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 4.1.1</td><td>Disobeying Order of a Superior</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.1.2</td><td>Disobeying Order of a State Leader</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.1.3</td><td>Disobeying Order of a Judicial Authority</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 4.2.1</td><td>Negligence by a Civil Servant</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.2.2</td><td>Negligence by a Law Enforcement Officer</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 4.3</td><td>Sabotage</td><td>$75,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 4.4.1</td><td>Disclosure of Police Information</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 4.4.1</td><td>Disclosure of Federal Information</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.4.2</td><td>Disclosure of State Information</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 4.5</td><td>Arbitrariness / Abuse of Authority</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 4.6</td><td>Receiving a Bribe</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 4.7.1</td><td>Conduct Unbecoming</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 4.7.2</td><td>Gross Ethics Violations</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 5 ================= -->
+<div id="a5" class="tab-content">
+<h2>🚗 ARTICLE 5 — Traffic Statute Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 5.1.1</td><td>Speeding up to 30km/h over limit</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.2</td><td>Speeding up to 60km/h over limit</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.3</td><td>Speeding up to 90km/h over limit</td><td>$15,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.4</td><td>Speeding in excess of 90km/h</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 5.3</td><td>Habitual Traffic Offender (License Revocation)</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>P.C. 5.5</td><td>Abandoning a Vehicle (Impound)</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.6</td><td>Unsafe Transporting of Passenger</td><td>$10,000</td><td>-</td><td>-</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 6 ================= -->
+<div id="a6" class="tab-content">
+<h2>🏛 ARTICLE 6 — Judicial Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 6.1.1</td><td>Contempt of Court</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 6.1.1</td><td>Contempt of Court by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 6.2.1</td><td>Disruption of Trial</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 6.2.2</td><td>Disruption of Trial by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 6.3</td><td>Threats to Litigants</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 6.4</td><td>Falsification of Evidence</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 6.5</td><td>Perjury</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 8 ================= -->
+<div id="a8" class="tab-content">
+<h2>💰 ARTICLE 8 — Commercial & Taxation Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 8.1.1</td><td>Selling Prohibited Items (Less than 5)</td><td>$20,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 8.1.2</td><td>Distribution of Prohibited Items (5–10)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 8.1.3</td><td>Dealing Prohibited Items (10+)</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 8.2.1</td><td>False Advertising</td><td>$15,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>P.C. 8.3.1</td><td>Tax Evasion</td><td>$30,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 8.3.2</td><td>Felony Tax Evasion</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 9 ================= -->
+<div id="a9" class="tab-content">
+<h2>⛓ ARTICLE 9 — Correctional Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 9.2.1</td><td>Smuggling of Contraband</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 9.2.2</td><td>Contraband Smuggling by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 9.3.1</td><td>Aiding an Escape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.3.2</td><td>Aiding Escape by State Employee</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 9.4.1</td><td>Aiding a Mass Escape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 9.5.1</td><td>Sexual Acts with Inmates (Civilian)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 9.5.2</td><td>Sexual Acts with Inmates (State Employee)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+</table>
+</div>
+
+<!-- ================= ARTICLE 10 ================= -->
+<div id="a10" class="tab-content">
+<h2>🚨 ARTICLE 10 — Violations of Public Order</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Points</th></tr>
+
+<tr><td>P.C. 10.1.1</td><td>Public Obscenity</td><td>1</td></tr>
+<tr><td>P.C. 10.1.2</td><td>Public Nudity</td><td>1</td></tr>
+<tr><td>P.C. 10.1.3</td><td>Public Nuisance</td><td>2</td></tr>
+<tr><td>P.C. 10.1.4</td><td>Public Drunkenness</td><td>2</td></tr>
+<tr><td>P.C. 10.1.5</td><td>Public Intoxication (Drug Use)</td><td>3</td></tr>
+<tr><td>P.C. 10.1.6</td><td>Public Harassment</td><td>2</td></tr>
+
+</table>
+</div>
+
+<!-- ================= TRAFFIC CODES ================= -->
+<div id="tc" class="tab-content">
+<h2>🚦 TRAFFIC CODES — Full List</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>T.C. 2.1</td><td>Absence of Valid Licence Plate</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.2.1</td><td>Driving the Opposite Lane</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.2.2</td><td>Driving Opposite Lane on Highway</td><td>$15,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>T.C. 3.3</td><td>Stopping on Road for No Reason</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.5.1</td><td>Driving on Deserted Sidewalks</td><td>$3,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.2</td><td>Chaotic Movement Between Lanes</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.3</td><td>Failure to Keep Distance</td><td>$3,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.4</td><td>Hard Braking</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.5</td><td>Creating Obstruction for Overtaking</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.6</td><td>Driving Under Influence</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>T.C. 3.7.1</td><td>Participation in a Street Race</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.7.2</td><td>Organization of a Street Race</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>T.C. 5.5</td><td>Abandoning a Vehicle</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 5.6</td><td>Unsafe Transporting of a Passenger</td><td>$10,000</td><td>-</td><td>-</td></tr>
+
+</table>
+
+<br>
+
+<h2>🅿 Parking Violations</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th></tr>
+
+<tr><td>T.C. 6.2.A</td><td>Parking on Red Curb</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.B</td><td>Blocking a Lane of Traffic (More than ½)</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.C</td><td>Blocking the Exit of Anywhere</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.D</td><td>Parking At / In a Crosswalk</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.E</td><td>Blocking more than ⅔ of Sidewalk/Bike Path</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.F</td><td>Parking on Dividing Strip (Double Yellow)</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.G</td><td>Facing Opposing Flow of Traffic</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.H</td><td>Stopping on Bridges or in Tunnels</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.I</td><td>Stopping on Highway / Freeway</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.J</td><td>Parking within 20m of a Burning Building</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.K</td><td>Blocking Bus Stops</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.L</td><td>Parking on Railroad Tracks</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.M</td><td>Parking Spaces Marked Yellow</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.N</td><td>Parking in Violation of Road Markings</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.P</td><td>Parking on Lawns or Green Spaces</td><td>$5,000</td></tr>
+
+<tr><td>T.C. 6.4</td><td>Unauthorized Parking in Prison</td><td>$15,000</td></tr>
+
+</table>
+
+<br>
+
+<h2>🏛 Special Location Parking</h2>
+
+<table>
+<tr><th>Code</th><th>Location</th><th>Fine</th></tr>
+
+<tr><td>T.C. 7.1</td><td>Illegal Parking at Capitol</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.2</td><td>Illegal Parking at Casino</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.3</td><td>Illegal Parking at Real Estate Agency</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.4</td><td>Illegal Parking at Pillbox Hospital</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.5</td><td>Illegal Parking at Legion Square Bank</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.6</td><td>Illegal Parking at LSPD</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.7</td><td>Illegal Parking at Power Plant</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.8</td><td>Illegal Parking at SAHP</td><td>$5,000</td></tr>
+
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (All Zones)</td><td>$5,000</td></tr>
+
+<tr><td>T.C. 7.10</td><td>Illegal Parking at Sawmill</td><td>$5,000</td></tr>
+
+<tr><td>T.C. 7.11</td><td>Illegal Parking at Farm 1</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.12</td><td>Illegal Parking at Farm 2</td><td>$5,000</td></tr>
+
+</table>
+</div>
+
+<!-- ================= COMMANDS TAB (WITH TITLES) ================= -->
+<div id="cmd" class="tab-content">
+<h2>📟 LSPD RP Commands</h2>
+
+<table>
+<tr><th>Command</th></tr>
+
+<!-- ✅ ON DUTY TITLE -->
+<tr>
+  <td style="font-weight:bold; color:cyan; background:rgba(0,0,0,0.6);">
+    ✅ ON DUTY COMMANDS
+  </td>
+</tr>
+
+<tr><td>/me turns on bodycam.</td></tr>
+<tr><td>/do makes sure is recording and uploaded to LSPD cloud</td></tr>
+<tr><td>/me Connects PDA to LSPD cloud</td></tr>
+<tr><td>10-8</td></tr>
+<tr><td>xxx to dispatch show me going 10-41 at IC time</td></tr>
+
+<tr><td>/me refreshes the bodycam</td></tr>
+<tr><td>/do it is recording</td></tr>
+<tr><td>/me saves the bodycam</td></tr>
+
+<tr><td>/me launches drone</td></tr>
+<tr><td>/try break the trunks with crowbar</td></tr>
+
+
+<!-- ✅ OFF DUTY TITLE -->
+<tr>
+  <td style="font-weight:bold; color:lime; background:rgba(0,0,0,0.6);">
+    ✅ OFF DUTY COMMANDS
+  </td>
+</tr>
+
+<tr><td>/me turns off bodycam</td></tr>
+<tr><td>/do makes sure it has been successfully recorded and uploaded to LSPD cloud server</td></tr>
+<tr><td>/do disconnects the PDA from LSPD cloud server</td></tr>
+<tr><td>10-9</td></tr>
+<tr><td>xxx to dispatch show me going 10-42 at IC time</td></tr>
+
+
+<!-- ✅ LAWYER TITLE -->
+<tr>
+  <td style="font-weight:bold; color:orange; background:rgba(0,0,0,0.6);">
+    ⚖️ LAWYER EVIDENCE COMMANDS
+  </td>
+</tr>
+
+<tr><td>/me uploads the bodycam footage in a SSD Card</td></tr>
+<tr><td>/me hands over the SSD card to (lawyer's name)</td></tr>
+
+
+<!-- ✅ JUMPSUIT TITLE -->
+<tr>
+  <td style="font-weight:bold; color:pink; background:rgba(0,0,0,0.6);">
+    👕 JUMPSUIT COMMANDS
+  </td>
+</tr>
+
+<tr><td>/me grabs universal size jumpsuit from behind the counter.</td></tr>
+<tr><td>/me grabs small size jumpsuit from behind the counter.</td></tr>
+<tr><td>/me grabs medium size jumpsuit from behind the counter.</td></tr>
+<tr><td>/me grabs big size jumpsuit from behind the counter.</td></tr>
+<tr><td>/me put jumpsuit on bed</td></tr>
+<tr><td>/try takes out cell phone and radio </td></tr>
+
+<!-- ✅ BIO / CORRUPT TITLE -->
+<tr>
+  <td style="font-weight:bold; color:red; background:rgba(0,0,0,0.6);">
+    ⚠️ BIO / CORRUPTION COMMANDS
+  </td>
+</tr>
+<tr><td>/try grabs the bodycam and threw on the ground and crushes it with leg and break it</td></tr>
+<tr><td>/me search the bodycam</td></tr>
+<tr><td>/try breaks the bodycam</td></tr>
+<tr><td>/me puts (item name) in his/her back pocket</td></tr>
+<tr><td>/try applies duct tape on the mouth</td></tr>
+
+</table>
+</div>
+
+<script>
+/* ✅ TAB SWITCH */
+function openTab(evt, tabId){
+  document.querySelectorAll(".tab-content").forEach(tab=>{
+    tab.classList.remove("active");
+  });
+
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  document.getElementById(tabId).classList.add("active");
+
+  if(evt){
+    evt.currentTarget.classList.add("active");
+  }
+}
+
+/* ✅ PERFECT FILTER SEARCH */
+const input = document.getElementById("searchInput");
+
+input.addEventListener("keyup", function(){
+
+  let query = input.value.toLowerCase().trim();
+  let firstMatchTab = null;
+
+  // ✅ Loop All Tabs
+  document.querySelectorAll(".tab-content").forEach(tab=>{
+
+    let rows = tab.querySelectorAll("tr");
+    let matchFoundInsideTab = false;
+
+    rows.forEach((row,index)=>{
+
+      // Keep table header always visible
+      if(index === 0){
+        row.style.display = "";
+        return;
+      }
+
+      // ✅ If search empty → show everything
+      if(query === ""){
+        row.style.display = "";
+        return;
+      }
+
+      // ✅ Only show matching rows
+      if(row.innerText.toLowerCase().includes(query)){
+        row.style.display = "";
+        matchFoundInsideTab = true;
+
+        // Save first match tab
+        if(!firstMatchTab){
+          firstMatchTab = tab.id;
+        }
+
+      } else {
+        row.style.display = "none";
+      }
+
+    });
+
+    // ✅ Hide full tab if no match in it
+    if(query !== "" && !matchFoundInsideTab){
+      tab.style.display = "none";
+    } else {
+      tab.style.display = "block";
+    }
+
+  });
+
+  // ✅ Auto Open Tab where match exists
+  if(firstMatchTab){
+
+    document.querySelectorAll(".tab-content").forEach(t=>{
+      t.classList.remove("active");
+    });
+
+    document.getElementById(firstMatchTab).classList.add("active");
+
+    document.querySelectorAll(".tab-btn").forEach(btn=>{
+      btn.classList.remove("active");
+      if(btn.getAttribute("onclick").includes(firstMatchTab)){
+        btn.classList.add("active");
+      }
+    });
+
+  }
+
+});
+
+/* ✅ COPY TO CLIPBOARD FUNCTION */
+function copyText(text){
+
+  navigator.clipboard.writeText(text);
+
+  showToast("✅ Copied Successfully!");
+}
+
+/* ✅ AUTO ADD COPY BUTTONS TO ALL TABLE ROWS */
+window.onload = function(){
+
+  document.querySelectorAll("table").forEach(table=>{
+
+    /* Add Copy column heading */
+    let headerRow = table.querySelector("tr");
+    if(headerRow){
+      let th = document.createElement("th");
+      th.innerText = "Copy";
+      headerRow.appendChild(th);
+    }
+
+    /* Add Copy button to each row */
+    table.querySelectorAll("tr").forEach((row,index)=>{
+
+      if(index === 0) return; // skip header row
+
+      let rowText = row.innerText.trim();
+
+      let td = document.createElement("td");
+
+      td.innerHTML = `<button class="copy-btn">Copy</button>`;
+
+      td.querySelector("button").onclick = function(){
+        copyText(rowText);
+      };
+
+      row.appendChild(td);
+
+    });
+
+  });
+
+};
+
+</script>
+<!-- ✅ CREDITS FOOTER -->
+<footer class="credits">
+  ⭐ Developed by: <b>Aditya Singh</b>, <b>Cindrella Queen</b><br>
+  ⭐ Assisted by: <b>Shadow Foster</b>
+</footer>
+
+</body>
+</html>
