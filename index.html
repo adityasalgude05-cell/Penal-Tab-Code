@@ -1,193 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Penal Code Tab</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Penal Code Tab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-  --bg:#05070d;
-  --glass:rgba(255,255,255,0.08);
-  --border:rgba(255,255,255,0.18);
-  --neon:#00f7ff;
-  --pink:#ff00ff;
-  --text:#e8faff;
-}
+  <style>
+  :root{
+    --bg:#05070d;
+    --glass:rgba(255,255,255,0.08);
+    --border:rgba(255,255,255,0.18);
+    --neon:#00f7ff;
+    --pink:#ff00ff;
+    --text:#e8faff;
+  }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
 
-body{
-  background:radial-gradient(circle at top,#101b35,#05070d);
-  color:var(--text);
-  padding:15px;
-}
+  body{
+    background:radial-gradient(circle at top,#101b35,#05070d);
+    color:var(--text);
+    padding:15px;
+  }
 
-header{
-  text-align:center;
-  padding:20px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid var(--border);
-  backdrop-filter:blur(14px);
-}
+  header{
+    text-align:center;
+    padding:20px;
+    border-radius:18px;
+    background:var(--glass);
+    border:1px solid var(--border);
+    backdrop-filter:blur(14px);
+  }
 
-header h1{
-  font-size:24px;
-  color:var(--neon);
-  text-shadow:0 0 15px var(--neon);
-}
+  header h1{
+    font-size:24px;
+    color:var(--neon);
+    text-shadow:0 0 15px var(--neon);
+  }
 
-/* Search */
-.search-box{
-  margin:20px auto;
-  max-width:650px;
-}
-.search-box input{
-  width:100%;
-  padding:14px;
-  border-radius:15px;
-  border:1px solid var(--neon);
-  outline:none;
-  font-size:16px;
-  background:rgba(0,0,0,0.55);
-  color:white;
-}
+  /* Search */
+  .search-box{
+    margin:20px auto;
+    max-width:650px;
+  }
+  .search-box input{
+    width:100%;
+    padding:14px;
+    border-radius:15px;
+    border:1px solid var(--neon);
+    outline:none;
+    font-size:16px;
+    background:rgba(0,0,0,0.55);
+    color:white;
+  }
 
-/* Tabs */
-.tabs{
-  display:flex;
-  flex-wrap:wrap;
-  margin-top:20px;
-  gap:10px;
-  justify-content:center;
-}
+  /* Tabs */
+  .tabs{
+    display:flex;
+    flex-wrap:wrap;
+    margin-top:20px;
+    gap:10px;
+    justify-content:center;
+  }
 
-.tab-btn{
-  padding:10px 16px;
-  border:none;
-  cursor:pointer;
-  border-radius:12px;
-  background:rgba(0,0,0,0.4);
-  border:1px solid var(--border);
-  color:white;
-  transition:0.3s;
-}
+  .tab-btn{
+    padding:10px 16px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(10,20,40,0.75);
+    color:white;
+    font-weight:600;
+  }
 
-.tab-btn:hover{
-  box-shadow:0 0 12px var(--neon);
-}
+  .tab-btn.active{
+    background:cyan;
+    color:black;
+    box-shadow:0 0 15px cyan;
+  }
 
-.tab-btn.active{
-  background:var(--neon);
-  color:black;
-  font-weight:bold;
-}
+  /* Content */
+  .tab-content{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:18px;
+    background:var(--glass);
+    border:1px solid var(--border);
+    backdrop-filter:blur(14px);
+  }
 
-/* Content */
-.tab-content{
-  display:none;
-  margin-top:20px;
-  padding:18px;
-  border-radius:18px;
-  background:var(--glass);
-  border:1px solid var(--border);
-  backdrop-filter:blur(14px);
-}
+  .tab-content.active{
+    display:block;
+  }
 
-.tab-content.active{
-  display:block;
-}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:12px;
-}
+  th,td{
+    padding:10px;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+  }
 
-th,td{
-  padding:10px;
-  border-bottom:1px solid rgba(255,255,255,0.15);
-}
+  th{color:#9ffcff;}
 
-th{color:#9ffcff;}
+  /* ✅ COPY BUTTON STYLE */
+  .copy-btn{
+    background: var(--neon);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.2s;
+  }
 
-/* ✅ COPY BUTTON STYLE */
-.copy-btn{
-  background: var(--neon);
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: bold;
-  transition: 0.2s;
-}
+  .copy-btn:hover{
+    background: white;
+    color: black;
+  }
 
-.copy-btn:hover{
-  background: white;
-  color: black;
-}
+  /* ✅ COPY BUTTON FOR COMMANDS */
+  .cmd-copy-btn{
+    background: lime;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+  }
 
-/* ✅ COPY BUTTON FOR COMMANDS */
-.cmd-copy-btn{
-  background: lime;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: bold;
-}
+  .cmd-copy-btn:hover{
+    background: white;
+    color: black;
+  }
 
-.cmd-copy-btn:hover{
-  background: white;
-  color: black;
-}
+  .search-box select{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid cyan;
+    margin-bottom:10px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+  }
+  /* ✅ REAL MDT LOGIN SCREEN */
+  .login-screen{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(120deg,#05070d,#081a35);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+  }
 
-/* ✅ Credits Footer */
-.credits{
-  text-align:center;
-  margin-top:30px;
-  padding:15px;
-  font-size:14px;
-  color:#9ffcff;
-  opacity:0.9;
-}
+  /* ✅ LOGIN CARD */
+  .login-box{
+    width:360px;
+    padding:30px;
+    border-radius:22px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(0,255,255,0.25);
+    box-shadow:0 0 25px rgba(0,255,255,0.15);
+    backdrop-filter:blur(18px);
+    text-align:center;
+    animation:fadeIn 0.6s ease;
+  }
 
-.credits b{
-  color:white;
-  text-shadow:0 0 12px cyan;
-}
+  /* ✅ Fade animation */
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(25px);}
+    to{opacity:1;transform:translateY(0);}
+  }
 
-@media(max-width:768px){
-  header h1{font-size:18px;}
-  table{font-size:13px;}
-}
-</style>
+  /* ✅ Title */
+  .login-box h2{
+    font-size:22px;
+    color:cyan;
+    text-shadow:0 0 12px cyan;
+    margin-bottom:10px;
+  }
+
+  /* ✅ Subtitle */
+  .login-box p{
+    font-size:13px;
+    opacity:0.7;
+    margin-bottom:15px;
+  }
+
+  /* ✅ Inputs */
+  .login-box input,
+  .login-box select{
+    width:100%;
+    margin:8px 0;
+    padding:13px;
+    border-radius:14px;
+    border:1px solid rgba(0,255,255,0.35);
+    background:rgba(0,0,0,0.55);
+    color:white;
+    font-size:14px;
+    transition:0.2s;
+  }
+
+  .login-box input:focus,
+  .login-box select:focus{
+    outline:none;
+    box-shadow:0 0 10px cyan;
+  }
+
+  /* ✅ Button */
+  .login-box button{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(90deg,cyan,#00aaff);
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.25s;
+  }
+
+  .login-box button:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 18px cyan;
+  }
+
+  /* ✅ Credits Footer */
+  .credits{
+    text-align:center;
+    margin-top:30px;
+    padding:15px;
+    font-size:14px;
+    color:#9ffcff;
+    opacity:0.9;
+  }
+  .credits b{
+    color:white;
+    text-shadow:0 0 12px cyan;
+  }
+  @media(max-width:768px){
+    header h1{font-size:18px;}
+    table{font-size:13px;}
+  }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <h1>🚔 Penal Codes Tab</h1>
+<!-- ================= REGISTER SCREEN ================= -->
+<div id="authScreen" class="login-screen">
+
+  <div class="login-box">
+    <div style="font-size:55px;margin-bottom:10px;">🚓</div>
+    <h2>📝 Officer Register</h2>
+
+      <input type="text" id="regName" placeholder="Full Name">
+      <input type="text" id="regId" placeholder="Badge ID">
+
+      <select id="regOrg">
+    <option value="LSPD">LSPD</option>
+    <option value="SAHP">SAHP</option>
+  </select>
+
+      <input type="text" id="regUser" placeholder="Create Username">
+      <input type="password" id="regPass" placeholder="Create Password">
+
+      <button onclick="registerOfficer()">Register</button>
+
+      <p style="margin-top:10px;">
+        Already registered?
+        <span onclick="showLogin()" style="color:cyan;cursor:pointer;">
+          Login Here
+        </span>
+      </p>
+
+      <p id="authError" style="color:red;"></p>
+  </div>
+</div>
+
+<!-- ================= LOGIN SCREEN ================= -->
+<div id="loginScreen" class="login-screen" style="display:none;">
+
+  <div class="login-box">
+    <h2>🔒 Officer Login</h2>
+
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+
+    <button onclick="loginOfficer()">Login</button>
+
+    <p style="margin-top:10px;">
+      New officer?
+      <span onclick="showRegister()" style="color:cyan;cursor:pointer;">
+        Register Here
+      </span>
+    </p>
+
+    <p id="loginError" style="color:red;"></p>
+  </div>
+</div>
+
+<!-- ================= MAIN CONTENT START ================= -->
+<div id="mainContent" style="display:none;">
+
+<header class="mdt-header">
+  <div>
+    <h1>LSPD MOBILE DATA TERMINAL</h1>
+    <p>Penal Code + Traffic + Commands Database</p>
+  </div>
+  <div class="mdt-status">
+    ✅ SYSTEM ONLINE
+  </div>
 </header>
 
 <div class="search-box">
-  <input type="text" id="searchInput" placeholder="🔍 Search Penal Code...">
+
+  <!-- ✅ Article Selector -->
+  <select id="articleSelect">
+    <option value="all">🌐 All Articles</option>
+    <option value="a2">Article 2</option>
+    <option value="a3">Article 3</option>
+    <option value="a4">Article 4</option>
+    <option value="a5">Article 5</option>
+    <option value="a6">Article 6</option>
+    <option value="a8">Article 8</option>
+    <option value="a9">Article 9</option>
+    <option value="a10">Article 10</option>
+    <option value="tc">Traffic Codes</option>
+    <option value="cmd">Commands</option>
+  </select>
+
+  <!-- ✅ Search Input -->
+  <input type="text" id="searchInput"
+  placeholder="🔍 Search any Penal Code / Crime Name...">
+
 </div>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="openTab(event,'a2')">Article 2</button>
-  <button class="tab-btn" onclick="openTab(event,'a3')">Article 3</button>
-  <button class="tab-btn" onclick="openTab(event,'a4')">Article 4</button>
-  <button class="tab-btn" onclick="openTab(event,'a5')">Article 5</button>
-  <button class="tab-btn" onclick="openTab(event,'a6')">Article 6</button>
-  <button class="tab-btn" onclick="openTab(event,'a8')">Article 8</button>
-  <button class="tab-btn" onclick="openTab(event,'a9')">Article 9</button>
-  <button class="tab-btn" onclick="openTab(event,'a10')">Article 10</button>
-  <button class="tab-btn" onclick="openTab(event,'tc')">Traffic Codes</button>
-   <button class="tab-btn" onclick="openTab(event,'cmd')">📟 Commands</button>
+
+  <button id="lspdDBTab" class="tab-btn"
+  onclick="openTab(event,'peopleLSPD')" style="display:none;">
+  👮 LSPD DB
+  </button>
+
+  <button id="sahpDBTab" class="tab-btn"
+  onclick="openTab(event,'peopleSAHP')" style="display:none;">
+  🟤 SAHP DB
+  </button>
+
+  <button id="accountsTab" class="tab-btn" onclick="openTab(event,'accounts')" style="display:none;">
+  👥 Accounts
+  </button>
+
+  <button class="tab-btn" onclick="openTab(event,'suggestTab')">
+  💡 Suggestions
+  </button>
+
+ <button class="tab-btn active" onclick="openTab(event,'a2')">Article 2</button>
+    <button class="tab-btn" onclick="openTab(event,'a3')">Article 3</button>
+    <button class="tab-btn" onclick="openTab(event,'a4')">Article 4</button>
+    <button class="tab-btn" onclick="openTab(event,'a5')">Article 5</button>
+    <button class="tab-btn" onclick="openTab(event,'a6')">Article 6</button>
+    <button class="tab-btn" onclick="openTab(event,'a8')">Article 8</button>
+    <button class="tab-btn" onclick="openTab(event,'a9')">Article 9</button>
+    <button class="tab-btn" onclick="openTab(event,'a10')">Article 10</button>
+    <button class="tab-btn" onclick="openTab(event,'tc')">Traffic Codes</button>
+     <button class="tab-btn" onclick="openTab(event,'cmd')">📟 Commands</button>
+</div>
+
+<div id="peopleLSPD" class="tab-content">
+<h2>👮 LSPD Citizen Database</h2>
+
+<input id="lspdName" placeholder="Name" class="cmd-search">
+<input id="lspdID" placeholder="Citizen ID" class="cmd-search">
+<input id="lspdCharges" placeholder="Charges" class="cmd-search">
+<input id="lspdNotes" placeholder="Notes" class="cmd-search">
+
+<button onclick="addPerson('LSPD')" class="tab-btn">Save</button>
+
+<div id="lspdList"></div>
+</div>
+<div id="peopleSAHP" class="tab-content">
+
+<h2>🟤 SAHP Citizen Database</h2>
+
+<input id="sahpName" placeholder="Name" class="cmd-search">
+<input id="sahpID" placeholder="Citizen ID" class="cmd-search">
+<input id="sahpCharges" placeholder="Charges" class="cmd-search">
+<input id="sahpNotes" placeholder="Notes" class="cmd-search">
+
+<button onclick="addPerson('SAHP')" class="tab-btn">Save</button>
+
+<div id="sahpList"></div>
+</div>
+
+<!-- ================= SUGGESTION TAB ================= -->
+<div id="suggestTab" class="tab-content">
+<h2>💡 Suggestion Box</h2>
+
+<textarea id="suggestText"
+placeholder="Write suggestion for Developer..."
+style="width:100%;height:120px;
+border-radius:12px;
+padding:10px;
+background:#101c33;
+color:white;"></textarea>
+
+<br><br>
+
+<button onclick="sendSuggestion()" class="tab-btn">
+Submit Suggestion
+</button>
+
+<p id="suggestMsg" style="color:lime;"></p>
+</div>
+
+<!-- ================= ACCOUNTS TAB ================= -->
+<div id="accounts" class="tab-content">
+<h2>👥 Officer Accounts</h2>
+<table id="accountsTable">
+  <tr><th>Badge ID</th><th>Name</th><th>Username</th><th>Organization</th><th>Action</th></tr>
+</table>
 </div>
 
 <!-- ================= ARTICLE 2 ================= -->
@@ -312,7 +552,6 @@ th{color:#9ffcff;}
 </table>
 </div>
 
-
 <!-- ================= ARTICLE 4 ================= -->
 <div id="a4" class="tab-content">
 <h2>📌 ARTICLE 4 — Malfeasance</h2>
@@ -362,6 +601,7 @@ th{color:#9ffcff;}
 
 </table>
 </div>
+
 
 <!-- ================= ARTICLE 6 ================= -->
 <div id="a6" class="tab-content">
@@ -439,6 +679,7 @@ th{color:#9ffcff;}
 
 </table>
 </div>
+
 
 <!-- ================= TRAFFIC CODES ================= -->
 <div id="tc" class="tab-content">
@@ -607,146 +848,238 @@ th{color:#9ffcff;}
 </div>
 
 <script>
-/* ✅ TAB SWITCH */
-function openTab(evt, tabId){
+/* ✅ GLOBAL SEARCH FILTER */
+document.getElementById("searchInput").addEventListener("keyup", function(){
+  let query = this.value.toLowerCase().trim();
+  let selectedTab = document.getElementById("articleSelect").value;
   document.querySelectorAll(".tab-content").forEach(tab=>{
-    tab.classList.remove("active");
-  });
-
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.classList.remove("active");
-  });
-
-  document.getElementById(tabId).classList.add("active");
-
-  if(evt){
-    evt.currentTarget.classList.add("active");
-  }
-}
-
-/* ✅ PERFECT FILTER SEARCH */
-const input = document.getElementById("searchInput");
-
-input.addEventListener("keyup", function(){
-
-  let query = input.value.toLowerCase().trim();
-  let firstMatchTab = null;
-
-  // ✅ Loop All Tabs
-  document.querySelectorAll(".tab-content").forEach(tab=>{
-
-    let rows = tab.querySelectorAll("tr");
-    let matchFoundInsideTab = false;
-
-    rows.forEach((row,index)=>{
-
-      // Keep table header always visible
-      if(index === 0){
-        row.style.display = "";
-        return;
-      }
-
-      // ✅ If search empty → show everything
-      if(query === ""){
-        row.style.display = "";
-        return;
-      }
-
-      // ✅ Only show matching rows
-      if(row.innerText.toLowerCase().includes(query)){
-        row.style.display = "";
-        matchFoundInsideTab = true;
-
-        // Save first match tab
-        if(!firstMatchTab){
-          firstMatchTab = tab.id;
-        }
-
-      } else {
-        row.style.display = "none";
-      }
-
-    });
-
-    // ✅ Hide full tab if no match in it
-    if(query !== "" && !matchFoundInsideTab){
+    if(tab.id.includes("people") || tab.id==="suggestTab" || tab.id==="accounts") return;
+    if(selectedTab !== "all" && tab.id !== selectedTab){
       tab.style.display = "none";
-    } else {
-      tab.style.display = "block";
+      return;
     }
-
-  });
-
-  // ✅ Auto Open Tab where match exists
-  if(firstMatchTab){
-
-    document.querySelectorAll(".tab-content").forEach(t=>{
-      t.classList.remove("active");
-    });
-
-    document.getElementById(firstMatchTab).classList.add("active");
-
-    document.querySelectorAll(".tab-btn").forEach(btn=>{
-      btn.classList.remove("active");
-      if(btn.getAttribute("onclick").includes(firstMatchTab)){
-        btn.classList.add("active");
+    let rows = tab.querySelectorAll("tr");
+    let matchFound = false;
+    rows.forEach((row,index)=>{
+      if(index===0){
+        row.style.display="";
+        return;
+      }
+      if(query===""){
+        row.style.display="";
+        matchFound=true;
+        return;
+      }
+      if(row.innerText.toLowerCase().includes(query)){
+        row.style.display="";
+        matchFound=true;
+      } else {
+        row.style.display="none";
       }
     });
-
-  }
-
+    tab.style.display = matchFound ? "block" : "none";
+  });
 });
 
 /* ✅ COPY TO CLIPBOARD FUNCTION */
 function copyText(text){
-
   navigator.clipboard.writeText(text);
-
-  showToast("✅ Copied Successfully!");
 }
 
-/* ✅ AUTO ADD COPY BUTTONS TO ALL TABLE ROWS */
-window.onload = function(){
-
+window.addEventListener("load", function(){
   document.querySelectorAll("table").forEach(table=>{
-
-    /* Add Copy column heading */
     let headerRow = table.querySelector("tr");
     if(headerRow){
       let th = document.createElement("th");
       th.innerText = "Copy";
       headerRow.appendChild(th);
     }
-
-    /* Add Copy button to each row */
     table.querySelectorAll("tr").forEach((row,index)=>{
-
-      if(index === 0) return; // skip header row
-
+      if(index===0) return;
       let rowText = row.innerText.trim();
-
       let td = document.createElement("td");
-
       td.innerHTML = `<button class="copy-btn">Copy</button>`;
-
-      td.querySelector("button").onclick = function(){
-        copyText(rowText);
-      };
-
+      td.querySelector("button").onclick = ()=>{ copyText(rowText); };
       row.appendChild(td);
-
     });
+  });
+});
 
+/* ✅ AUTH SYSTEM */
+let officers = JSON.parse(localStorage.getItem("accounts")) || [];
+let officerOrg = "";
+
+/* ✅ Show Login Screen */
+function showLogin(){
+  document.getElementById("authScreen").style.display="none";
+  document.getElementById("loginScreen").style.display="flex";
+}
+
+/* ✅ Show Register Screen */
+function showRegister(){
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("authScreen").style.display="flex";
+}
+
+/* ✅ Register Officer */
+function registerOfficer(){
+  let name = document.getElementById("regName").value.trim();
+  let bid  = document.getElementById("regId").value.trim();
+  let org  = document.getElementById("regOrg").value;
+  let user = document.getElementById("regUser").value.trim();
+  let pass = document.getElementById("regPass").value.trim();
+  if(name==="" || bid==="" || user==="" || pass===""){
+    document.getElementById("authError").innerText="❌ Fill all fields!";
+    return;
+  }
+  officers.push({name,bid,org,user,pass});
+  localStorage.setItem("accounts", JSON.stringify(officers));
+  showLogin();
+}
+
+/* ✅ Login Officer */
+function loginOfficer(){
+  let user = document.getElementById("loginUser").value.trim();
+  let pass = document.getElementById("loginPass").value.trim();
+  if(user==="admin" && pass==="admin"){
+    officerOrg = "Admin";
+    document.getElementById("authScreen").style.display="none";
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("mainContent").style.display="block";
+    applyOrgRestrictions();
+    loadAccounts();
+    return;
+  }
+  let found = officers.find(o=>o.user===user && o.pass===pass);
+  if(!found){
+    document.getElementById("loginError").innerText="❌ Invalid login!";
+    return;
+  }
+  officerOrg = found.org;
+  document.getElementById("authScreen").style.display="none";
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("mainContent").style.display="block";
+  applyOrgRestrictions();
+}
+
+/* ✅ Org Restrictions */
+function applyOrgRestrictions(){
+  document.getElementById("lspdDBTab").style.display="none";
+  document.getElementById("sahpDBTab").style.display="none";
+  document.getElementById("accountsTab").style.display="none";
+
+  if(officerOrg==="LSPD"){
+    document.getElementById("lspdDBTab").style.display="inline-block";
+  }
+  if(officerOrg==="SAHP"){
+    document.getElementById("sahpDBTab").style.display="inline-block";
+  }
+  if(officerOrg==="Admin"){
+    document.getElementById("lspdDBTab").style.display="inline-block";
+    document.getElementById("sahpDBTab").style.display="inline-block";
+    document.getElementById("accountsTab").style.display="inline-block";
+  }
+}
+
+/* ✅ Suggestions */
+let suggestions = JSON.parse(localStorage.getItem("suggestions")) || [];
+
+function sendSuggestion(){
+  let text = document.getElementById("suggestText").value.trim();
+  if(text==="") return;
+  suggestions.push({
+    from: officerOrg,
+    msg: text,
+    time: new Date().toLocaleString()
+  });
+  localStorage.setItem("suggestions", JSON.stringify(suggestions));
+  document.getElementById("suggestMsg").innerText="✅ Sent!";
+  document.getElementById("suggestText").value="";
+}
+
+function openTab(evt, tabId){
+
+  // ✅ 1. Hide ALL tab contents
+  document.querySelectorAll(".tab-content").forEach(tab=>{
+    tab.classList.remove("active");
+    tab.style.display = "none"; // ✅ Important Fix
   });
 
-};
+  // ✅ 2. Remove highlight from ALL buttons
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.classList.remove("active");
+  });
 
+  // ✅ 3. Show ONLY the selected tab
+  let selectedTab = document.getElementById(tabId);
+  selectedTab.classList.add("active");
+  selectedTab.style.display = "block"; // ✅ Important Fix
+
+  // ✅ 4. Highlight clicked button
+  if(evt){
+    evt.currentTarget.classList.add("active");
+  }
+
+  // ✅ 5. If Suggestion tab opened, clear search
+  if(tabId === "suggestTab"){
+    document.getElementById("searchInput").value = "";
+  }
+}
+
+function loadPeople(org){
+  return JSON.parse(localStorage.getItem("people_"+org)) || [];
+}
+
+function addPerson(org){
+  let name = document.getElementById(org.toLowerCase()+"Name").value.trim();
+  let id   = document.getElementById(org.toLowerCase()+"ID").value.trim();
+  if(name==="" || id===""){
+    alert("Name + ID required!");
+    return;
+  }
+  let data = loadPeople(org);
+  data.push({name,id});
+  localStorage.setItem("people_"+org, JSON.stringify(data));
+  alert("Saved in "+org+" Database");
+}
+
+function loadAccounts(){
+  let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+  let table = document.getElementById("accountsTable");
+  table.innerHTML = '<tr><th>Badge ID</th><th>Name</th><th>Username</th><th>Organization</th><th>Action</th></tr>';
+  accounts.forEach((acc,index)=>{
+    let row = table.insertRow();
+    let cell0 = row.insertCell(); cell0.innerText = acc.bid;
+    let cell1 = row.insertCell(); cell1.innerText = acc.name;
+    let cell2 = row.insertCell(); cell2.innerText = acc.user;
+    let cell3 = row.insertCell(); cell3.innerText = acc.org;
+    let cell4 = row.insertCell(); cell4.innerHTML = '<button onclick="deleteAccount('+index+')">Delete</button>';
+  });
+}
+
+function deleteAccount(index){
+  let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+  if(index > -1){
+    accounts.splice(index,1);
+    localStorage.setItem("accounts", JSON.stringify(accounts));
+    loadAccounts();
+  }
+}
+
+window.addEventListener("load", ()=>{
+  if(officers.length > 0){
+    showLogin();
+  }
+});
 </script>
+
 <!-- ✅ CREDITS FOOTER -->
 <footer class="credits">
   ⭐ Developed by: <b>Aditya Singh</b>, <b>Cindrella Queen</b><br>
   ⭐ Assisted by: <b>Shadow Foster</b>
 </footer>
+
+</div> <!-- ✅ MAIN CONTENT END -->
 
 </body>
 </html>
