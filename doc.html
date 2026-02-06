@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LSPD TITAN OS v18.0 PRO (FIXED)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Hardware Colors */
+            --bezel: #050505;
+            /* OS Theme Colors */
+            --bg-os: #0a0f1c;
+            --primary: #00f7ff;
+            --primary-dim: rgba(0, 247, 255, 0.1);
+            --accent: #3b82f6;
+            --danger: #ff2a6d;
+            --success: #00ff9d;
+            --warning: #f59e0b;
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #e2e2e2;
+            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 20px 20px;
+            height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        /* --- 🔍 STRICT SEARCH CSS (THE FIX) --- */
+        
+        /* 1. Force Hide Items */
+        .hidden-item { display: none !important; }
+
+        /* 2. When searching, forcefully hide ALL tabs first */
+        body.is-searching .tab-content { display: none !important; }
+
+        /* 3. When searching, forcefully SHOW tabs that have results */
+        body.is-searching .tab-content:not(.hidden-item) { 
+            display: block !important; 
+            animation: none;
+        }
+
+        /* 4. Highlight Active Tabs in Search Mode */
+        .tab-btn.has-results {
+            border-color: var(--success) !important;
+            color: var(--success) !important;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+            background: rgba(0, 255, 157, 0.1);
+        }
+
+        /* --- END SEARCH CSS --- */
+
+        .tablet-casing {
+            width: 95vw; 
+            height: 92vh; 
+            background: linear-gradient(145deg, #374151, #1f2937);
+            border-radius: 12px;
+            position: relative; 
+            display: flex; 
+            flex-direction: column;
+            padding: 25px 55px 40px 25px; 
+            box-shadow: 
+                0 0 0 4px #111827, 
+                0 0 0 10px #374151, 
+                0 30px 60px rgba(0,0,0,0.5), 
+                inset 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        .tablet-casing::before, .tablet-casing::after {
+            content: ''; position: absolute; width: 60px; height: 60px;
+            background: #111; border-radius: 16px; z-index: 1;
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1);
+        }
+        .tablet-casing::before { top: -8px; left: -8px; box-shadow: 4px 4px 10px rgba(0,0,0,0.5); }
+        .bumper-tr { position: absolute; top: -8px; right: -8px; width: 60px; height: 60px; background: #111; border-radius: 16px; z-index: 1; }
+        .tablet-casing::after { bottom: -8px; left: -8px; }
+        .bumper-br { position: absolute; bottom: -8px; right: -8px; width: 60px; height: 60px; background: #111; border-radius: 16px; z-index: 1; }
+
+        .hw-buttons-panel {
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 10;
+        }
+        .hw-btn {
+            width: 32px; height: 32px;
+            background: #1f2937; border: 1px solid #4b5563;
+            border-radius: 6px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            color: #9ca3af; font-family: sans-serif; font-size: 10px; font-weight: bold;
+            cursor: pointer; transition: 0.1s;
+        }
+        .hw-btn:active { transform: scale(0.95); box-shadow: inset 0 0 5px #000; color: #fff; }
+        .hw-btn-long { height: 50px; } 
+
+        .camera-housing {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 140px; height: 24px;
+            background: #111; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+            z-index: 20; display: flex; justify-content: center; align-items: center; gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .lens { width: 10px; height: 10px; background: #0f172a; border-radius: 50%; border: 1px solid #334155; position: relative; }
+        .lens::after { content:''; position: absolute; top:2px; left:2px; width:4px; height:4px; background:rgba(255,255,255,0.2); border-radius:50%; }
+        .sensor { width: 6px; height: 6px; background: #222; border-radius: 50%; }
+
+        .device-logo {
+            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+            color: #d1d5db; font-family: 'Inter', sans-serif; font-weight: 800;
+            font-size: 14px; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            z-index: 10; opacity: 0.8;
+        }
+
+        .screen-bezel {
+            background: #000;
+            flex: 1;
+            border-radius: 4px;
+            padding: 10px;
+            display: flex; flex-direction: column;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 5;
+            border: 1px solid #1f2937;
+        }
+
+        .screen {
+            background: #000; flex: 1; border-radius: 2px;
+            overflow: hidden; position: relative;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9); 
+            display: flex; flex-direction: column;
+        }
+
+        .screen::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
+
+        #bootLayer {
+            position: absolute; inset: 0; background: #000; z-index: 300;
+            display: flex; flex-direction: column; padding: 40px;
+            font-family: 'JetBrains Mono', monospace; color: var(--primary); font-size: 1.2rem;
+        }
+        .boot-line { margin-bottom: 5px; opacity: 0; animation: fadeIn 0.1s forwards; }
+
+        #lockLayer {
+            position: absolute; inset: 0; z-index: 200;
+            background: url('https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .blur-bg { position: absolute; inset: 0; backdrop-filter: blur(15px); background: rgba(0,0,0,0.6); }
+
+        .auth-card {
+            position: relative; width: 400px;
+            background: rgba(10, 15, 28, 0.85); border: 1px solid var(--border);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(30px); border-radius: 16px; padding: 40px;
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .user-icon {
+            width: 80px; height: 80px; background: var(--primary); border-radius: 50%;
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; box-shadow: 0 0 25px rgba(0, 247, 255, 0.3);
+            border: 3px solid rgba(255,255,255,0.1);
+        }
+
+        #appLayer {
+            position: absolute; inset: 0; z-index: 100;
+            background: var(--bg-os); display: flex; flex-direction: column;
+            opacity: 0; transition: opacity 1s; height: 100%;
+        }
+
+        .os-bar {
+            height: 36px; background: rgba(5, 5, 5, 0.9); display: flex; align-items: center;
+            justify-content: space-between; padding: 0 20px; font-size: 0.85rem; color: var(--text-muted);
+            border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono'; flex-shrink: 0; z-index: 20;
+        }
+
+        .main-body { flex: 1; display: flex; overflow: hidden; position: relative; z-index: 10; }
+
+        .sidebar {
+            width: 260px; 
+            background: rgba(10, 12, 18, 0.95); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .brand h2 { color: var(--text-main); font-weight: 800; letter-spacing: 1px; margin: 0; font-size: 1.4rem; font-style: italic; }
+        .brand span { font-size: 0.8rem; color: var(--primary); letter-spacing: 2px; }
+
+        .nav-group { margin-top: 30px; flex: 1; overflow-y: auto; }
+        .nav-btn {
+            padding: 12px 15px; color: var(--text-muted); cursor: pointer; border-radius: 8px;
+            margin-bottom: 6px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; gap: 12px; font-size: 0.95rem;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+        .nav-btn.active { background: var(--primary-dim); color: var(--primary); border: 1px solid rgba(0, 247, 255, 0.2); }
+
+        .session-box {
+            background: #050505; border: 1px solid var(--border); border-radius: 8px;
+            padding: 15px; margin-top: 20px; flex-shrink: 0; text-align: center;
+        }
+        .timer-val { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; color: var(--success); font-weight: 700; }
+
+        .content-view { 
+            flex: 1; padding: 0; overflow: hidden; display: flex; flex-direction: column; 
+            background: radial-gradient(circle at 50% 50%, #151f32 0%, #0a0f1c 100%);
+        }
+        
+        .input-glass {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            padding: 12px 16px; border-radius: 6px; color: white;
+            font-family: 'Inter', sans-serif; outline: none; transition: 0.3s; font-size: 0.95rem; width: 100%;
+        }
+        .input-glass:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
+
+        .btn-glass {
+            width: 100%; background: var(--primary);
+            border: none; padding: 12px; border-radius: 6px; color: #000; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; margin-top: 10px; transition: 0.2s;
+        }
+        .btn-glass:hover { filter: brightness(1.1); }
+
+        .link-text { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; cursor: pointer; display: block; }
+        .link-text:hover { color: white; text-decoration: underline; }
+
+        .tabs-header { 
+            padding: 15px 25px; background: rgba(0,0,0,0.2); 
+            border-bottom: 1px solid var(--border); display: flex; gap: 8px; overflow-x: auto; 
+            white-space: nowrap; flex-shrink: 0; 
+        }
+        .tabs-header::-webkit-scrollbar { height: 4px; }
+        .tabs-header::-webkit-scrollbar-thumb { background: var(--primary); }
+
+        .tab-btn {
+            padding: 8px 16px; border-radius: 6px; border: 1px solid transparent;
+            background: transparent; color: var(--text-muted); cursor: pointer;
+            font-size: 0.9rem; font-weight: 600; transition: 0.2s;
+        }
+        .tab-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+        .tab-btn.active { background: var(--primary-dim); color: var(--primary); border-color: rgba(0, 247, 255, 0.3); }
+
+        .tab-content { 
+            display: none; padding: 30px; overflow-y: auto; flex: 1; animation: fadeIn 0.2s ease; 
+        }
+        .tab-content.active { display: block; }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0f1c; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        h2 { color: var(--text-main); font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        h2::before { content:''; display:block; width: 4px; height: 24px; background: var(--primary); border-radius: 2px; }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9rem; margin-bottom: 30px; }
+
+        th { 
+            text-align: left; padding: 14px 15px; color: var(--primary); background: #131b2e; 
+            border-bottom: 2px solid var(--border); text-transform: uppercase; font-size: 0.75rem; 
+            letter-spacing: 1px; font-weight: 700; position: sticky; top: 0; z-index: 10; 
+            backdrop-filter: blur(5px);
+        }
+        
+        td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; vertical-align: top; }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        tr:hover td { background: rgba(0, 247, 255, 0.05); color: white; }
+
+        th:nth-child(1) { width: 12%; } 
+        th:nth-child(2) { width: 50%; } 
+        th:nth-child(3) { width: 10%; } 
+        th:nth-child(4) { width: 10%; } 
+        th:nth-child(5) { width: 10%; } 
+
+        .profile-card {
+            display: flex; align-items: center; background: linear-gradient(90deg, rgba(0, 247, 255, 0.1), rgba(0,0,0,0));
+            border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 30px; border-radius: 12px;
+        }
+        .badge-org { background: var(--primary); color: black; padding: 4px 10px; border-radius: 4px; font-weight: 800; font-size: 0.8rem; margin-right: 10px; }
+        .badge-id { border: 1px solid var(--primary); color: var(--primary); padding: 3px 10px; border-radius: 4px; font-weight: 800; font-size: 0.8rem; }
+
+        .copy-btn {
+            background: transparent; border: 1px solid #334155; color: #94a3b8;
+            padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; transition: all 0.2s;
+        }
+        .copy-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .copy-btn.copied { background: var(--success) !important; color: #000 !important; border-color: var(--success) !important; }
+
+        .search-container { padding: 20px 25px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+        .search-input { 
+            width: 100%; padding: 14px 20px; border-radius: 8px; border: 1px solid var(--border); 
+            background: rgba(0,0,0,0.3); color: white; outline: none; font-size: 1rem; 
+        }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 247, 255, 0.1); }
+
+        .citizen-form { display: flex; gap: 15px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+        .btn-delete { background: rgba(255, 42, 109, 0.1); border: 1px solid var(--danger); color: var(--danger); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+    <div class="tablet-casing">
+        <div class="bumper-tr"></div>
+        <div class="bumper-br"></div>
+        
+        <div class="camera-housing">
+            <div class="sensor"></div>
+            <div class="lens"></div>
+            <div class="sensor"></div>
+        </div>
+
+        <div class="hw-buttons-panel">
+            <div class="hw-btn" title="Power"><span style="font-size:14px;">⏻</span></div>
+            <div class="hw-btn" title="P1">P1</div>
+            <div class="hw-btn" title="P2">P2</div>
+            <div class="hw-btn hw-btn-long" title="Volume">▲<br>▼</div>
+        </div>
+
+        <div class="device-logo">DURABOOK</div>
+
+        <div class="screen-bezel">
+            <div class="screen">
+                
+                <div id="bootLayer"></div>
+
+                <div id="lockLayer" class="hidden">
+                    <div class="blur-bg"></div>
+                    <div id="loginForm" class="auth-card">
+                        <div class="user-icon">👮‍♂️</div>
+                        <h2 style="justify-content:center; color:white; border:none; margin-bottom:5px;">TITAN SECURE</h2>
+                        <p style="color:var(--text-muted); margin-bottom: 25px; font-size:0.9rem;">Restricted Access // Government Only</p>
+                        
+                        <input type="text" id="lUser" class="input-glass" placeholder="Badge Number (e.g. 001)" style="margin-bottom:10px;">
+                        <input type="password" id="lPass" class="input-glass" placeholder="Security Key">
+                        <button class="btn-glass" onclick="login()">INITIATE SESSION</button>
+                        
+                        <span class="link-text" onclick="toggleAuth(true)">Register New Identity</span>
+                        <p id="loginMsg" style="color:var(--danger); margin-top:10px; font-size:0.85rem;"></p>
+                    </div>
+
+                    <div id="regForm" class="auth-card hidden">
+                        <h2 style="justify-content:center; color:var(--primary); border:none;">NEW OFFICER</h2>
+                        <input type="text" id="rName" class="input-glass" placeholder="Full Name" style="margin-bottom:10px;">
+                        <input type="text" id="rBadge" class="input-glass" placeholder="Badge Number" style="margin-bottom:10px;">
+                        <select id="rDept" class="input-glass" style="background:#1e293b; margin-bottom:10px;">
+                            <option value="LSPD">LSPD</option><option value="BCSO">BCSO</option><option value="SAHP">SAHP</option>
+                        </select>
+                        <input type="password" id="rPass" class="input-glass" placeholder="Create Password">
+                        <button class="btn-glass" onclick="register()">CREATE IDENTITY</button>
+                        <span class="link-text" onclick="toggleAuth(false)">Back to Login</span>
+                        <p id="regMsg" style="color:var(--success); margin-top:10px; font-size:0.85rem;"></p>
+                    </div>
+                </div>
+
+                <div id="appLayer" class="hidden">
+                    <div class="os-bar">
+                        <span style="color:var(--success); font-weight:bold;">● TITAN NET // CONNECTED</span>
+                        <span id="clock" style="color:white;">12:00</span>
+                        <span style="color:var(--success);">PWR 100%</span>
+                    </div>
+
+                    <div class="main-body">
+                        <aside class="sidebar">
+                            <div class="brand">
+                                <h2>LSPD TITAN</h2>
+                                <span>MAINFRAME v18.0 PRO</span>
+                            </div>
+
+                            <div class="nav-group">
+                                <div class="nav-btn active" onclick="switchMainView('db', this)">📚 Penal Code</div>
+                                <div class="nav-btn" onclick="switchMainView('profile', this)">🆔 My Identity</div>
+                                <div class="nav-btn" onclick="switchMainView('citizens', this)">👥 Citizen DB</div>
+                                <div class="nav-btn" onclick="alert('Roster Syncing...')">👮 Duty Roster</div>
+                            </div>
+
+                            <div class="session-box">
+                                <span style="font-size:0.7rem; color:#64748b; display:block; margin-bottom:5px;">SESSION DURATION</span>
+                                <div class="timer-val" id="sessionTimer">00:00:00</div>
+                                <button class="btn-delete" style="width:100%; margin-top:10px; background:transparent;" onclick="location.reload()">LOGOUT</button>
+                            </div>
+                        </aside>
+
+                        <main class="content-view">
+                            
+                            <div id="view-db" class="main-view" style="display:flex; flex-direction:column; height:100%;">
+                                <div class="search-container">
+                                    <input type="text" id="globalSearch" class="search-input" placeholder="🔍 Global search across ALL articles..." oninput="searchAll(this.value)">
+                                    <div id="searchIndicator" style="margin-top:8px;font-size:0.9rem;color:#64748b;"></div>
+                                </div>
+
+                                <div class="tabs-header">
+                                    <button class="tab-btn active" onclick="openTab('a2', this)">Art. 2 (Society)</button>
+                                    <button class="tab-btn" onclick="openTab('a3', this)">Art. 3 (State)</button>
+                                    <button class="tab-btn" onclick="openTab('a4', this)">Art. 4 (Malfeasance)</button>
+                                    <button class="tab-btn" onclick="openTab('a5', this)">Art. 5 (Traffic)</button>
+                                    <button class="tab-btn" onclick="openTab('a6', this)">Art. 6 (Judicial)</button>
+                                    <button class="tab-btn" onclick="openTab('a8', this)">Art. 8 (Eco/Tax)</button>
+                                    <button class="tab-btn" onclick="openTab('a9', this)">Art. 9 (Prison)</button>
+                                    <button class="tab-btn" onclick="openTab('a10', this)">Art. 10 (Order)</button>
+                                    <button class="tab-btn" onclick="openTab('tc', this)">Traffic Codes</button>
+                                    <button class="tab-btn" onclick="openTab('cmd', this)">Commands</button>
+                                </div>
+
+                                <div id="a2" class="tab-content active">
+<h2>⚖️ ARTICLE 2 — Crimes Against Society</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 2.1.1</td><td>Possession of Narcotics (4 Units or Less)</td><td>$15,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.1.1</td><td>Repeat Offense</td><td>$10,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.1.2</td><td>Possession of Narcotics (5–9 Units)</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.1.3</td><td>Narcotics with Intent to Distribute</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.1.6</td><td>Possession of Prohibited Items (Less than 3)</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.1.7</td><td>Prohibited Items with Intent to Distribute (More than 3)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.2.1</td><td>Culpable Homicide / Manslaughter</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.2.2</td><td>Murder / Attempted Murder</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 2.2.3</td><td>Murder Premeditated</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.3.1</td><td>Assault by Threat</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+<tr><td>P.C. 2.4.1</td><td>Abandonment</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.4.2</td><td>Failure to Act / Abandonment by Civil Servant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.5.1</td><td>Kidnapping / Attempted Kidnapping</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.5.2</td><td>Kidnapping - Civil Servant</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 2.5.3</td><td>Kidnapping - LEO</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.6.1</td><td>Taking a Hostage</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.7.1</td><td>Sexual Harassment</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.7.2</td><td>Sexual Assault</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 2.7.3</td><td>Rape</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.8.1</td><td>Forgery of Documents</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.8.2</td><td>Dealing in Forged Documents</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+<tr><td>P.C. 2.9.1</td><td>Petty Theft / Larceny</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.9.1</td><td>Repeat Offense Petty Theft</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.9.4</td><td>Grand Theft Auto</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.10</td><td>Armed Robbery</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.11</td><td>Heist</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.12</td><td>Extortion</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.13</td><td>Fraud</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.14</td><td>Creation of Criminal Community</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.15.1</td><td>Participation in Banditry</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.15.2</td><td>Banditry as Leader</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 2.16.1</td><td>Assault</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.16.2</td><td>Assault with Intent to Harm</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.16.3</td><td>Assault GBH</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.17.1</td><td>Unlicensed Firearms Carry</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.2</td><td>Excessive Firearms Carry (Overcarrying)</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.3</td><td>Possession of Illegal Firearms</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.17.4</td><td>Dealing Illegal Firearms</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.5</td><td>Possession of State Issued Items</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.17.6</td><td>Illegal Body Armour</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.17.7</td><td>Brandishing Firearm</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 2.17.8</td><td>Discharging Firearm</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.8</td><td>Repeat Discharging Firearm</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.17.9</td><td>Public Carrying Firearm</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 2.17.9</td><td>Repeat Public Carrying</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+<tr><td>P.C. 2.18.1</td><td>Misappropriation of a Vehicle (Reckless Driving)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.18.2</td><td>Misappropriation of a Official or State Vehicle</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.18.3</td><td>Misuse of a Vehicle</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 2.18.4</td><td>Vehicle Used in Criminal Activity</td><td>$10,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>P.C. 2.19</td><td>Pimping</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.20</td><td>Prostitution</td><td>$10,000</td><td>15</td><td>1</td></tr>
+
+<tr><td>P.C. 2.21</td><td>Hooliganism</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 2.22</td><td>Bribery or Attempted Bribery of an Official</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.23</td><td>Failure to Pay Fines</td><td>$50,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.24.1</td><td>Leaving the Scene</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.24.2</td><td>Evading Arrest</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 2.25</td><td>Attempted or Actual Escape from Custody</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 2.26</td><td>Insubordination / Failure to Comply</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.27</td><td>Violation of Privacy</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.28</td><td>Intentional Spreading of Disease</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 2.29</td><td>Breaking and Entering into a Private Residence</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 2.30.1</td><td>Animal Cruelty</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 2.30.2</td><td>Killing an Animal or Pet</td><td>$30,000</td><td>45</td><td>3</td></tr>
+</table>
+</div>
+
+<div id="a3" class="tab-content">
+<h2>🚨 ARTICLE 3 — Crimes Against the State</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 3.1.1</td><td>Terrorism as a Participant</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.1.2</td><td>Leading of Terrorism</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.2.1</td><td>Participating in a Riot</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.2.2</td><td>Leading of a Riot</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.3.1</td><td>Sedition as a Participant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.3.2</td><td>Leading of Sedition</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.4.1</td><td>Treason as a Participant</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 3.4.2</td><td>Leading of Treason (High Treason)</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.5.1</td><td>Obstruction of an Investigation</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.5.2</td><td>Obstruction of an Officer or Civil Servant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.5.3</td><td>Obstruction of an Arrest or Detention</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.6.1</td><td>Murder / Attempted Murder of LEO in Line of Duty</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.6.2</td><td>Murder / Attempted Murder of Civil Servant or LEO</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.7</td><td>False Reporting</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.8.1</td><td>Trespassing</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 3.8.2</td><td>Trespassing on Secure Facility</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.9.1</td><td>Collusion with Criminal Elements</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 3.11.1</td><td>Failure to Submit Documents</td><td>$10,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 3.11.2</td><td>Failure to Identify</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 3.12.1</td><td>Disclosure of Information</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 3.12.2</td><td>Disclosure of Classified Information</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 3.13.1</td><td>Posing as a Civil Servant</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 3.13.2</td><td>Posing as a Law Enforcement Officer</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 3.14.1</td><td>Corruption by a State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+<div id="a4" class="tab-content">
+<h2>📌 ARTICLE 4 — Malfeasance</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 4.1.1</td><td>Disobeying Order of a Superior</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.1.2</td><td>Disobeying Order of a State Leader</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.1.3</td><td>Disobeying Order of a Judicial Authority</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 4.2.1</td><td>Negligence by a Civil Servant</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.2.2</td><td>Negligence by a Law Enforcement Officer</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 4.3</td><td>Sabotage</td><td>$75,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 4.4.1</td><td>Disclosure of Police Information</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 4.4.1</td><td>Disclosure of Federal Information</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 4.4.2</td><td>Disclosure of State Information</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 4.5</td><td>Arbitrariness</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 4.6</td><td>Receiving a Bribe</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 4.7.1</td><td>Conduct Unbecoming</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 4.7.2</td><td>Gross Ethics Violations</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+</table>
+</div>
+
+<div id="a5" class="tab-content">
+<h2>🚗 ARTICLE 5 — Traffic Statute Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 5.1.1</td><td>Speeding up to 30km/h over limit</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.2</td><td>Speeding up to 60km/h over limit</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.3</td><td>Speeding up to 90km/h over limit</td><td>$15,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.1.4</td><td>Speeding in excess of 90km/h</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 5.3</td><td>Habitual Traffic Offender (License Revocation)</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>P.C. 5.5</td><td>Abandoning a Vehicle (Impound)</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 5.6</td><td>Unsafe Transporting of Passenger</td><td>$10,000</td><td>-</td><td>-</td></tr>
+
+</table>
+</div>
+
+<div id="a6" class="tab-content">
+<h2>🏛 ARTICLE 6 — Judicial Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 6.1.1</td><td>Contempt of Court</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 6.1.1</td><td>Contempt of Court by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 6.2.1</td><td>Disruption of Trial</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 6.2.2</td><td>Disruption of Trial by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 6.3</td><td>Threats to Litigants</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 6.4</td><td>Falsification of Evidence</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 6.5</td><td>Perjury</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+<div id="a8" class="tab-content">
+<h2>💰 ARTICLE 8 — Commercial & Taxation Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 8.1.1</td><td>Selling Prohibited Items (Less than 5)</td><td>$20,000</td><td>15</td><td>1</td></tr>
+<tr><td>P.C. 8.1.2</td><td>Distribution of Prohibited Items (5–10)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 8.1.3</td><td>Dealing Prohibited Items (10+)</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 8.2.1</td><td>False Advertising</td><td>$15,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>P.C. 8.3.1</td><td>Tax Evasion</td><td>$30,000</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 8.3.2</td><td>Felony Tax Evasion</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+</table>
+</div>
+
+<div id="a9" class="tab-content">
+<h2>⛓ ARTICLE 9 — Correctional Crimes</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>P.C. 9.1.1</td><td>Failure to Behave</td><td>Isolation</td><td>-</td><td>-</td></tr>
+<tr><td>P.C. 9.1.2</td><td>Failure to Comply</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 9.1.3</td><td>Sexual Acts with Inmates</td><td>$40,000</td><td>60</td><td>4</td></tr>
+<tr><td>P.C. 9.1.4</td><td>Sabotage</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.1.5</td><td>Attempted Escape</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 9.1.6</td><td>Attempted Mass Escape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.1.7</td><td>Incitement to Riot</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.1.8</td><td>Rioting</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 9.1.9</td><td>Assaulting an Officer</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 9.2.1</td><td>Smuggling of Contraband</td><td>$30,000</td><td>45</td><td>3</td></tr>
+<tr><td>P.C. 9.2.2</td><td>Contraband Smuggling by State Employee</td><td>$40,000</td><td>60</td><td>4</td></tr>
+
+<tr><td>P.C. 9.3.1</td><td>Aiding an Escape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.3.2</td><td>Aiding Escape by State Employee</td><td>$30,000</td><td>45</td><td>3</td></tr>
+
+<tr><td>P.C. 9.4.1</td><td>Aiding a Mass Escape</td><td>$50,000</td><td>75</td><td>5</td></tr>
+<tr><td>P.C. 9.4.2</td><td>Aiding a Mass Escape by a State Employee</td><td>$50,000</td><td>75</td><td>5</td></tr>
+
+<tr><td>P.C. 9.5.1</td><td>Sexual Acts with Inmates (Civilian)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+<tr><td>P.C. 9.5.2</td><td>Sexual Acts with Inmates (State Employee)</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+</table>
+</div>
+
+<div id="a10" class="tab-content">
+<h2>🚨 ARTICLE 10 — Violations of Public Order</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Points</th></tr>
+
+<tr><td>P.C. 10.1.1</td><td>Public Obscenity</td><td>1</td></tr>
+<tr><td>P.C. 10.1.2</td><td>Public Nudity</td><td>1</td></tr>
+<tr><td>P.C. 10.1.3</td><td>Public Nuisance</td><td>2</td></tr>
+<tr><td>P.C. 10.1.4</td><td>Public Drunkenness</td><td>2</td></tr>
+<tr><td>P.C. 10.1.5</td><td>Public Intoxication (Drug Use)</td><td>3</td></tr>
+<tr><td>P.C. 10.1.6</td><td>Public Harassment</td><td>2</td></tr>
+
+</table>
+</div>
+
+<div id="tc" class="tab-content">
+<h2>🚦 TRAFFIC CODES — Full List</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th><th>Time</th><th>Stars</th></tr>
+
+<tr><td>T.C. 2.1</td><td>Absence of Valid Licence Plate</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.2.1</td><td>Driving the Opposite Lane</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.2.2</td><td>Driving Opposite Lane on Highway</td><td>$15,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>T.C. 3.3</td><td>Stopping on Road for No Reason</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.5.1</td><td>Driving on Deserted Sidewalks</td><td>$3,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.2</td><td>Chaotic Movement Between Lanes</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.3</td><td>Failure to Keep Distance</td><td>$3,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.4</td><td>Hard Braking</td><td>$5,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.5.5</td><td>Creating Obstruction for Overtaking</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 3.6</td><td>Driving Under Influence</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>T.C. 3.7.1</td><td>Participation in a Street Race</td><td>$10,000</td><td>-</td><td>-</td></tr>
+<tr><td>T.C. 3.7.2</td><td>Organization of a Street Race</td><td>$20,000</td><td>30</td><td>2</td></tr>
+
+<tr><td>P.C. 5.5</td><td>Abandoning a Vehicle</td><td>$5,000</td><td>-</td><td>-</td></tr>
+
+<tr><td>T.C. 5.6</td><td>Unsafe Transporting of a Passenger</td><td>$10,000</td><td>-</td><td>-</td></tr>
+
+</table>
+
+<br>
+
+<h2>🅿 Parking Violations</h2>
+
+<table>
+<tr><th>Code</th><th>Description</th><th>Fine</th></tr>
+
+<tr><td>T.C. 6.2.A</td><td>Parking on Red Curb</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.B</td><td>Blocking a Lane of Traffic (More than ½)</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.C</td><td>Blocking the Exit of Anywhere</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.D</td><td>Parking At / In a Crosswalk</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.E</td><td>Blocking more than ⅔ of Sidewalk/Bike Path</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.F</td><td>Parking on Dividing Strip (Double Yellow)</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.G</td><td>Facing Opposing Flow of Traffic</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.H</td><td>Stopping on Bridges or in Tunnels</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.I</td><td>Stopping on Highway / Freeway</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.J</td><td>Parking within 20m of a Burning Building</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.K</td><td>Blocking Bus Stops</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.L</td><td>Parking on Railroad Tracks</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.M</td><td>Parking Spaces Marked Yellow</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.N</td><td>Parking in Violation of Road Markings</td><td>$5,000</td></tr>
+<tr><td>T.C. 6.2.P</td><td>Parking on Lawns or Green Spaces</td><td>$5,000</td></tr>
+
+<tr><td>T.C. 6.4</td><td>Unauthorized Parking in Prison</td><td>$15,000</td></tr>
+
+</table>
+
+<br>
+
+<h2>🏛 Special Location Parking</h2>
+
+<table>
+<tr><th>Code</th><th>Location</th><th>Fine</th></tr>
+
+<tr><td>T.C. 7.1</td><td>Illegal Parking at Capitol</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.2</td><td>Illegal Parking at Casino</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.3</td><td>Illegal Parking at Real Estate Agency</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.4</td><td>Illegal Parking at Pillbox Hospital</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.5</td><td>Illegal Parking at Legion Square Bank</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.6</td><td>Illegal Parking at LSPD</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.7</td><td>Illegal Parking at Power Plant</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.8</td><td>Illegal Parking at SAHP</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (Zone 1)</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (Zone 2)</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (Zone 3,4)</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (Zone 5,6,7)</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.9</td><td>Illegal Parking at Quarry (Zone 8)</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.10</td><td>Illegal Parking at Sawmill</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.11</td><td>Illegal Parking at Farm 1</td><td>$5,000</td></tr>
+<tr><td>T.C. 7.12</td><td>Illegal Parking at Farm 2</td><td>$5,000</td></tr>
+
+</table>
+</div>
+
+<div id="cmd" class="tab-content">
+                                <h2>📟 LSPD RP Commands</h2>
+                                <table>
+                                    <tbody>
+                                    <tr class="cmd-title-row"><td style="background:rgba(0,247,255,0.1); color:cyan; border-bottom:1px solid cyan;">✅ ON DUTY COMMANDS</td></tr>
+                                    <tr><td>/me turns on bodycam.</td></tr>
+                                    <tr><td>/do makes sure is recording and uploaded to LSPD cloud</td></tr>
+                                    <tr><td>/me Connects PDA to LSPD cloud</td></tr>
+                                    <tr><td>10-8</td></tr>
+                                    <tr><td>xxx to dispatch show me going 10-41 at IC time</td></tr>
+                                    <tr><td>/me refreshes the bodycam</td></tr>
+                                    <tr><td>/do it is recording</td></tr>
+                                    <tr><td>/me saves the bodycam</td></tr>
+                                    <tr><td>/me launches drone</td></tr>
+                                    <tr><td>/try break the trunks with crowbar</td></tr>
+
+                                    <tr class="cmd-title-row"><td style="background:rgba(50,205,50,0.1); color:lime; border-bottom:1px solid lime;">✅ OFF DUTY COMMANDS</td></tr>
+                                    <tr><td>/me turns off bodycam</td></tr>
+                                    <tr><td>/do makes sure it has been successfully recorded and uploaded to LSPD cloud server</td></tr>
+                                    <tr><td>/do disconnects the PDA from LSPD cloud server</td></tr>
+                                    <tr><td>10-9</td></tr>
+                                    <tr><td>xxx to dispatch show me going 10-42 at IC time</td></tr>
+
+                                    <tr class="cmd-title-row"><td style="background:rgba(255,165,0,0.1); color:orange; border-bottom:1px solid orange;">⚖️ LAWYER EVIDENCE COMMANDS</td></tr>
+                                    <tr><td>/me uploads the bodycam footage in a SSD Card</td></tr>
+                                    <tr><td>/me hands over the SSD card to (lawyer's name)</td></tr>
+
+                                    <tr class="cmd-title-row"><td style="background:rgba(255,192,203,0.1); color:pink; border-bottom:1px solid pink;">👕 JUMPSUIT COMMANDS</td></tr>
+                                    <tr><td>/me grabs universal size jumpsuit from behind the counter.</td></tr>
+                                    <tr><td>/me grabs small size jumpsuit from behind the counter.</td></tr>
+                                    <tr><td>/me grabs medium size jumpsuit from behind the counter.</td></tr>
+                                    <tr><td>/me grabs big size jumpsuit from behind the counter.</td></tr>
+                                    <tr><td>/me put jumpsuit on bed</td></tr>
+                                    <tr><td>/try takes out cell phone and radio </td></tr>
+
+                                    <tr class="cmd-title-row"><td style="background:rgba(255,0,0,0.1); color:red; border-bottom:1px solid red;">⚠️ BIO / CORRUPTION COMMANDS</td></tr>
+                                    <tr><td>/try grabs the bodycam and threw on the ground and crushes it with leg and break it</td></tr>
+                                    <tr><td>/me search the bodycam</td></tr>
+                                    <tr><td>/try breaks the bodycam</td></tr>
+                                    <tr><td>/me puts (item name) in his/her back pocket</td></tr>
+                                    <tr><td>/try applies duct tape on the mouth</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="view-profile" class="main-view" style="display:none; padding:40px;">
+                            <h2>🆔 Officer Identity</h2>
+                            <div class="profile-card">
+                                <div class="profile-info" style="flex:1;">
+                                    <h3 id="profileName" style="color:white; font-size:2.5rem; margin:0;">UNKNOWN</h3>
+                                    <div class="profile-badges" style="margin-top:10px;">
+                                        <span id="profileOrg" class="badge-org">LSPD</span>
+                                        <span id="profileId" class="badge-id">BADGE #000</span>
+                                    </div>
+                                    <p class="profile-user" style="color:var(--success); margin-top:15px; font-family:'JetBrains Mono';">STATUS: ACTIVE DUTY</p>
+                                </div>
+                                <div style="font-size:60px;">👮‍♂️</div>
+                            </div>
+                        </div>
+
+                        <div id="view-citizens" class="main-view" style="display:none; padding:30px;">
+                            <h2>👥 Citizen Management</h2>
+                            
+                            <div class="citizen-form">
+                                <input id="citName" class="input-glass" placeholder="Full Name" style="flex:1;">
+                                <input id="citID" class="input-glass" placeholder="ID Number" style="width:140px;">
+                                <input id="citNotes" class="input-glass" placeholder="Criminal History / Notes" style="flex:2;">
+                                <button class="copy-btn" style="background:var(--success); color:#000; border:none; padding:0 20px;" onclick="addCitizen()">SAVE</button>
+                            </div>
+
+                            <table id="citTable">
+                                <thead><tr><th>Citizen Name</th><th>State ID</th><th>Criminal Record</th><th>Action</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    /* --- SYSTEM INIT --- */
+    let sessionStart = 0;
+    let timerInt = null;
+    let citizens = JSON.parse(localStorage.getItem('titan_citizens_db')) || [];
+    let officers = JSON.parse(localStorage.getItem('titan_users')) || [];
+    let currentUser = null;
+
+    // Default Admin Account
+    if(officers.length === 0) {
+        officers.push({ name: "System Admin", badge: "001", dept: "LSPD", pass: "admin" });
+        localStorage.setItem('titan_users', JSON.stringify(officers));
+    }
+
+    window.onload = function() {
+        // Start BIOS Boot
+        setTimeout(() => {
+            document.getElementById('bootLayer').style.display = 'none';
+            document.getElementById('lockLayer').classList.remove('hidden');
+        }, 1500);
+
+        const boot = document.getElementById('bootLayer');
+        const lines = [
+            "TITAN BIOS v18.0 PRO", 
+            "Checking Hardware...", 
+            "Memory: 64TB OK", 
+            "Verifying Security Keys...", 
+            "Connection Established.", 
+            "System Ready."
+        ];
+        let delay = 0;
+        lines.forEach(l => {
+            setTimeout(() => boot.innerHTML += `<div class='boot-line'>> ${l}</div>`, delay);
+            delay += 250;
+        });
+
+        // Auto Add Copy Buttons to Database Tables
+        addCopyButtons();
+    };
+
+    /* --- AUTHENTICATION --- */
+    function toggleAuth(reg) {
+        document.getElementById('loginForm').classList.toggle('hidden', reg);
+        document.getElementById('regForm').classList.toggle('hidden', !reg);
+        document.getElementById('loginMsg').innerText = "";
+        document.getElementById('regMsg').innerText = "";
+    }
+
+    function register() {
+        const n = document.getElementById('rName').value;
+        const b = document.getElementById('rBadge').value;
+        const d = document.getElementById('rDept').value;
+        const p = document.getElementById('rPass').value;
+
+        if(!n || !b || !p) {
+            document.getElementById('regMsg').style.color = "var(--danger)";
+            document.getElementById('regMsg').innerText = "All fields are required.";
+            return;
+        }
+
+        officers.push({ name: n, badge: b, dept: d, pass: p });
+        localStorage.setItem('titan_users', JSON.stringify(officers));
+        
+        document.getElementById('regMsg').style.color = "var(--success)";
+        document.getElementById('regMsg').innerText = "Identity Created. Please Login.";
+        setTimeout(() => toggleAuth(false), 1500);
+    }
+
+    function login() {
+        const b = document.getElementById('lUser').value;
+        const p = document.getElementById('lPass').value;
+        const user = officers.find(o => o.badge === b && o.pass === p);
+
+        if(user) {
+            currentUser = user;
+            document.getElementById('lockLayer').classList.add('hidden');
+            document.getElementById('appLayer').classList.remove('hidden');
+            setTimeout(() => document.getElementById('appLayer').style.opacity = 1, 100);
+
+            // Set Profile Data
+            document.getElementById('profileName').innerText = user.name;
+            document.getElementById('profileOrg').innerText = user.dept;
+            document.getElementById('profileId').innerText = "BADGE #" + user.badge;
+
+            // Start Session
+            startSession();
+            renderCitizens();
+        } else {
+            document.getElementById('loginMsg').innerText = "Invalid Credentials";
+        }
+    }
+
+    function startSession() {
+        sessionStart = Date.now();
+        timerInt = setInterval(() => {
+            let diff = Date.now() - sessionStart;
+            let h = Math.floor(diff / 3600000).toString().padStart(2,'0');
+            let m = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
+            let s = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
+            document.getElementById('sessionTimer').innerText = `${h}:${m}:${s}`;
+            
+            // Real Clock
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        }, 1000);
+    }
+
+    /* --- TABS & NAVIGATION --- */
+    function openTab(id, btn) {
+        // Clear search when switching tabs manually
+        document.getElementById('globalSearch').value = "";
+        searchAll(""); 
+
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function switchMainView(viewId, btn) {
+        document.querySelectorAll('.main-view').forEach(v => v.style.display = 'none');
+        document.getElementById('view-'+viewId).style.display = 'block';
+        if(viewId === 'db') {
+            document.getElementById('view-db').style.display = 'flex'; // Ensure flex for scrolling
+        }
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    /* --- DYNAMIC COPY BUTTONS --- */
+    function addCopyButtons() {
+        const rows = document.querySelectorAll("tr");
+        rows.forEach((row) => {
+            if(row.parentElement.tagName === 'THEAD' || row.querySelector('th') || row.classList.contains('cmd-title-row')) return;
+            
+            const firstCell = row.cells[0];
+            const secondCell = row.cells[1];
+            
+            let textToCopy = "";
+            if(firstCell && secondCell) {
+                textToCopy = `${firstCell.innerText} - ${secondCell.innerText}`;
+            } else if(firstCell) {
+                textToCopy = firstCell.innerText;
+            }
+
+            if(!row.querySelector('.copy-btn')) {
+                let actionCell = document.createElement("td");
+                actionCell.innerHTML = `<button class="copy-btn" onclick="copyText(this, '${textToCopy.replace(/'/g, "\\'")}')">COPY</button>`;
+                row.appendChild(actionCell);
+            }
+        });
+    }
+
+    function copyText(btn, text) {
+        navigator.clipboard.writeText(text);
+        let original = btn.innerText;
+        btn.innerText = "COPIED";
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerText = "COPY";
+            btn.classList.remove('copied');
+        }, 1500);
+    }
+
+    /* --- CITIZEN DATABASE --- */
+    function addCitizen() {
+        const n = document.getElementById('citName').value;
+        const i = document.getElementById('citID').value;
+        const r = document.getElementById('citNotes').value;
+
+        if(n && i) {
+            citizens.push({ name: n, id: i, notes: r });
+            localStorage.setItem('titan_citizens_db', JSON.stringify(citizens));
+            renderCitizens();
+            document.getElementById('citName').value = '';
+            document.getElementById('citID').value = '';
+            document.getElementById('citNotes').value = '';
+        } else {
+            alert("Name and ID are required.");
+        }
+    }
+
+    function deleteCitizen(index) {
+        if(confirm("Delete this record permanently?")) {
+            citizens.splice(index, 1);
+            localStorage.setItem('titan_citizens_db', JSON.stringify(citizens));
+            renderCitizens();
+        }
+    }
+
+    function renderCitizens() {
+        const tbody = document.querySelector('#citTable tbody');
+        tbody.innerHTML = '';
+        citizens.forEach((c, index) => {
+            let row = `<tr>
+                <td style="font-weight:bold; color:#fff;">${c.name}</td>
+                <td style="font-family:'JetBrains Mono'; color:var(--primary);">${c.id}</td>
+                <td style="color:#cbd5e1;">${c.notes}</td>
+                <td><button class="btn-delete" onclick="deleteCitizen(${index})">DELETE</button></td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+
+    /* 🔥 TITAN GLOBAL SEARCH ENGINE (FIXED) */
+    function searchAll(val) {
+        val = val.toLowerCase().trim();
+        const body = document.body;
+        const indicator = document.getElementById("searchIndicator");
+        let matchCount = 0;
+
+        /* ---------- RESET ---------- */
+        if (val === "") {
+            body.classList.remove("is-searching");
+            document.querySelectorAll(".hidden-item").forEach(el => el.classList.remove("hidden-item"));
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("has-results"));
+            indicator.innerText = "";
+            return;
+        }
+
+        body.classList.add("is-searching");
+
+        /* ---------- ROW FILTER ---------- */
+        // We now select ALL rows in ALL tables (not just tbody) to catch every item
+        document.querySelectorAll("table tr").forEach(row => {
+            // Skip Header Rows
+            if (row.getElementsByTagName("th").length > 0) return;
+
+            let text = row.innerText.toLowerCase();
+            let match = text.includes(val);
+
+            // Special Logic for Command Titles: Keep if next sibling matches
+            if (row.classList.contains("cmd-title-row")) {
+                let next = row.nextElementSibling;
+                match = text.includes(val) || (next && next.innerText.toLowerCase().includes(val));
+            }
+
+            row.classList.toggle("hidden-item", !match);
+            if (match && !row.classList.contains("cmd-title-row")) matchCount++;
+        });
+
+        /* ---------- TABLE FILTER ---------- */
+        document.querySelectorAll("table").forEach(table => {
+            let visible = table.querySelectorAll("tr:not(.hidden-item)");
+            // If table has only header (th) rows visible, hide it
+            let hasData = false;
+            visible.forEach(r => { if(r.getElementsByTagName('td').length > 0) hasData = true; });
+            
+            table.classList.toggle("hidden-item", !hasData);
+        });
+
+        /* ---------- HEADER FILTER ---------- */
+        document.querySelectorAll("h2").forEach(header => {
+            let next = header.nextElementSibling;
+            while (next && next.tagName !== "TABLE") next = next.nextElementSibling;
+            header.classList.toggle("hidden-item", !next || next.classList.contains("hidden-item"));
+        });
+
+        /* ---------- TAB FILTER ---------- */
+        document.querySelectorAll(".tab-content").forEach(tab => {
+            let visible = tab.querySelectorAll("table:not(.hidden-item)");
+            let btn = document.querySelector(`.tab-btn[onclick*="'${tab.id}'"]`);
+            if (visible.length > 0) {
+                tab.classList.remove("hidden-item");
+                if (btn) btn.classList.add("has-results");
+            } else {
+                tab.classList.add("hidden-item");
+                if (btn) btn.classList.remove("has-results");
+            }
+        });
+
+        /* ---------- INDICATOR ---------- */
+        if (matchCount > 0) {
+            indicator.innerText = `🔍 ${matchCount} result${matchCount > 1 ? "s" : ""} found`;
+            indicator.style.color = "#00ff9d";
+        } else {
+            indicator.innerText = "❌ No results found";
+            indicator.style.color = "#ff2a6d";
+        }
+    }
+</script>
+</body>
+</html>
